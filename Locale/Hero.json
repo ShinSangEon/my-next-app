@@ -1,0 +1,157 @@
+{
+  "ko": {
+    "title": {
+      "main": "비디오 편집 전문가와 함께",
+      "highlight": "미래를 만들어갑니다."
+    },
+    "description": "안전하고 효율적인 비디오 편집부터 유지보수까지, 전문가들이 함께합니다.",
+    "buttons": {
+      "consult": "상담 신청하기",
+      "learnMore": "더 알아보기"
+    },
+    "stats": {
+      "installations": { "number": "1200+", "label": "편집 완료" },
+      "satisfaction": { "number": "98%", "label": "고객 만족도" },
+      "experience": { "number": "15년+", "label": "업계 경력" },
+      "support": { "number": "24/7", "label": "기술 지원" }
+    },
+    "process": {
+      "step1": {
+        "title": "1️⃣ 상담",
+        "desc": "영상 편집 요구사항을 상담하고 최적의 솔루션을 제공합니다."
+      },
+      "step2": {
+        "title": "2️⃣ 편집",
+        "desc": "고객의 요구에 맞춰 비디오를 전문적으로 편집합니다."
+      },
+      "step3": {
+        "title": "3️⃣ 피드백",
+        "desc": "1차 편집본 제공 후 고객의 피드백을 반영합니다."
+      },
+      "step4": {
+        "title": "4️⃣ 완료",
+        "desc": "최종 수정 후 고객이 만족하는 완성본을 전달합니다."
+      }
+    },
+    "features": {
+      "fast": {
+        "title": "🚀 빠른 납기",
+        "desc": "최대 48시간 내 신속한 편집 제공"
+      },
+      "custom": {
+        "title": "🎨 맞춤 편집",
+        "desc": "브랜드 스타일에 맞춘 최적화된 영상 제작"
+      },
+      "expert": {
+        "title": "👨‍💻 전문가 리뷰",
+        "desc": "숙련된 편집자의 꼼꼼한 검수 과정 포함"
+      }
+    },
+    "faq": {
+      "q1": {
+        "question": "💰 비디오 편집 비용은 어떻게 계산되나요?",
+        "answer": "영상 길이와 난이도에 따라 달라집니다. 상담 후 견적을 제공합니다."
+      },
+      "q2": {
+        "question": "⏳ 급하게 필요한 경우 얼마나 빨리 받을 수 있나요?",
+        "answer": "일반적으로 3~5일 내 완성되며, 긴급 편집 요청도 가능합니다."
+      },
+      "q3": {
+        "question": "🔄 수정 요청은 몇 번까지 가능한가요?",
+        "answer": "기본적으로 2회까지 가능하며, 추가 수정은 상담 후 진행됩니다."
+      },
+      "q4": {
+        "question": "🎬 특정 스타일로 편집 요청이 가능한가요?",
+        "answer": "네! 브랜드 가이드라인을 반영하여 맞춤 편집이 가능합니다."
+      },
+      "q5": {
+        "question": "📝 자막 추가도 해주나요?",
+        "answer": "네! 다양한 언어의 자막을 추가할 수 있습니다."
+      }
+    }
+  },
+
+  "en": {
+    "title": {
+      "main": "Together with Video Editing Experts",
+      "highlight": "We Create the Future"
+    },
+    "description": "From safe and efficient video editing to maintenance, our experts are with you.",
+    "buttons": {
+      "consult": "Get Consultation",
+      "learnMore": "Learn More"
+    },
+    "stats": {
+      "installations": {
+        "number": "1,200+",
+        "label": "Projects Completed"
+      },
+      "satisfaction": {
+        "number": "98%",
+        "label": "Client Satisfaction"
+      },
+      "experience": {
+        "number": "15+ Years",
+        "label": "Industry Experience"
+      },
+      "support": {
+        "number": "24/7",
+        "label": "Technical Support"
+      }
+    },
+    "process": {
+      "step1": {
+        "title": "1️⃣ Consultation",
+        "desc": "Discuss editing requirements and provide the best solution."
+      },
+      "step2": {
+        "title": "2️⃣ Editing",
+        "desc": "Professionally edit the video according to the client's needs."
+      },
+      "step3": {
+        "title": "3️⃣ Feedback",
+        "desc": "Provide the first version and incorporate client feedback."
+      },
+      "step4": {
+        "title": "4️⃣ Completion",
+        "desc": "Finalize and deliver the polished video."
+      }
+    },
+    "features": {
+      "fast": {
+        "title": "🚀 Fast Delivery",
+        "desc": "Quick editing service within 48 hours"
+      },
+      "custom": {
+        "title": "🎨 Customized Editing",
+        "desc": "Tailored video production matching your brand style"
+      },
+      "expert": {
+        "title": "👨‍💻 Expert Review",
+        "desc": "Thorough review by professional editors"
+      }
+    },
+    "faq": {
+      "q1": {
+        "question": "💰 How is video editing pricing determined?",
+        "answer": "Costs vary based on video length and complexity. Contact us for a quote."
+      },
+      "q2": {
+        "question": "⏳ How fast can I receive my edited video?",
+        "answer": "Typically within 3-5 days. Urgent requests are also available."
+      },
+      "q3": {
+        "question": "🔄 How many revisions are included?",
+        "answer": "Up to 2 revisions are included. Additional edits can be discussed."
+      },
+      "q4": {
+        "question": "🎬 Can I request a specific editing style?",
+        "answer": "Yes! We customize edits based on your brand guidelines."
+      },
+      "q5": {
+        "question": "📝 Do you provide subtitles?",
+        "answer": "Yes! We offer subtitles in multiple languages."
+      }
+    }
+  }
+}

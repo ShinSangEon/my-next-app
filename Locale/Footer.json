@@ -1,0 +1,58 @@
+{
+  "ko": {
+    "footer": {
+      "company": {
+        "title": "회사 소개",
+        "description": "저희 회사는 최고의 서비스를 제공하기 위해 노력합니다. 단순한 촬영 및 편집이 아닌 지속가능한 미래를 위한 서비스를 제공합니다."
+      },
+      "quickLinks": {
+        "title": "빠른 링크",
+        "home": "홈",
+        "about": "회사 정보",
+        "leadership": "임원 소개",
+        "board": "업무 게시판",
+        "services": "제공 기술",
+        "contact": "문의"
+      },
+      "contact": {
+        "title": "연락처",
+        "address1": "경상남도 진주시",
+        "address2": "호탄동 624-19 1층",
+        "phone": "대표 권오형 010-8553-0545",
+        "email": "이메일: marumidi@naver.com"
+      },
+      "social": {
+        "title": "소셜 미디어"
+      },
+      "copyright": "© 2025 Maru company. All rights reserved."
+    }
+  },
+  "en": {
+    "footer": {
+      "company": {
+        "title": "About Us",
+        "description": "We strive to provide the best services. We offer not just video production and editing but sustainable solutions for the future."
+      },
+      "quickLinks": {
+        "title": "Quick Links",
+        "home": "Home",
+        "about": "About",
+        "leadership": "Leadership",
+        "board": "Board",
+        "services": "Services",
+        "contact": "Contact"
+      },
+      "contact": {
+        "title": "Contact",
+        "address1": "Jinju, Gyeongsangnam-do",
+        "address2": "624-19 Hotan-dong, 1st Floor",
+        "phone": "CEO Oh-Hyung Kwon 010-8553-0545",
+        "email": "Email: marumidi@naver.com"
+      },
+      "social": {
+        "title": "Social Media"
+      },
+      "copyright": "© 2025 Maru company. All rights reserved."
+    }
+  }
+}

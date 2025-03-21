@@ -1,0 +1,104 @@
+{
+  "ko": {
+    "about": {
+      "title": "회사 소개",
+      "companyName": "Maru Company",
+      "subtitle": "혁신과 신뢰로 글로벌 시장을 선도합니다.",
+      "description": "창의적인 영상과 감각적인 사진이 만들어내는 특별한 순간, 마루미디어가 함께합니다. 진주시 호탄동에 위치한 마루미디어는 전문적인 영상 편집과 사진 제작을 통해 브랜드와 개인이 원하는 감동을 완성합니다.",
+      "services": {
+        "title": "주요 서비스",
+        "items": [
+          {
+            "title": "🎬 영상 편집 & 제작",
+            "desc": "기업 홍보 영상, 유튜브 콘텐츠, 광고 및 행사 영상"
+          },
+          {
+            "title": "📷 사진 편집 & 촬영",
+            "desc": "프로필 사진, 제품 촬영, 브랜드 이미지 제작"
+          },
+          {
+            "title": "💡 브랜딩 컨설팅",
+            "desc": "스토리텔링을 통한 브랜드 가치 극대화"
+          }
+        ]
+      },
+      "values": {
+        "title": "핵심 가치",
+        "items": [
+          {
+            "title": "🚀 혁신",
+            "desc": "끊임없는 도전과 혁신으로 미래를 선도합니다"
+          },
+          {
+            "title": "🤝 신뢰",
+            "desc": "고객과의 신뢰를 최우선 가치로 삼습니다"
+          },
+          {
+            "title": "📈 성장",
+            "desc": "구성원들의 지속적인 성장을 지원합니다"
+          }
+        ]
+      },
+      "history": {
+        "title": "회사 연혁",
+        "events": [
+          { "year": "2023", "event": "글로벌 시장 진출" },
+          { "year": "2022", "event": "시리즈 B 투자 유치" },
+          { "year": "2021", "event": "주요 기술 특허 획득" },
+          { "year": "2020", "event": "회사 설립" }
+        ]
+      }
+    }
+  },
+  "en": {
+    "about": {
+      "title": "About Us",
+      "companyName": "Maru Company",
+      "subtitle": "Leading the global market with innovation and trust.",
+      "description": "Maru Media captures special moments through creative videos and artistic photography. Located in Hotan-dong, Jinju, we specialize in video editing and photography to create meaningful impact for brands and individuals.",
+      "services": {
+        "title": "Our Services",
+        "items": [
+          {
+            "title": "🎬 Video Editing & Production",
+            "desc": "Corporate promotional videos, YouTube content, advertisements, and event videos"
+          },
+          {
+            "title": "📷 Photography & Editing",
+            "desc": "Profile photography, product shoots, and brand image creation"
+          },
+          {
+            "title": "💡 Branding Consulting",
+            "desc": "Maximizing brand value through storytelling"
+          }
+        ]
+      },
+      "values": {
+        "title": "Core Values",
+        "items": [
+          {
+            "title": "🚀 Innovation",
+            "desc": "Leading the future through continuous challenge and innovation"
+          },
+          {
+            "title": "🤝 Trust",
+            "desc": "Building trust with customers as our top priority"
+          },
+          {
+            "title": "📈 Growth",
+            "desc": "Supporting the continuous growth of our members"
+          }
+        ]
+      },
+      "history": {
+        "title": "Company History",
+        "events": [
+          { "year": "2023", "event": "Global Market Entry" },
+          { "year": "2022", "event": "Series B Investment" },
+          { "year": "2021", "event": "Major Technology Patent Acquisition" },
+          { "year": "2020", "event": "Company Established" }
+        ]
+      }
+    }
+  }
+}

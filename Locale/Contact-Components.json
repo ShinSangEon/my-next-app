@@ -1,0 +1,56 @@
+{
+  "ko": {
+    "contact": {
+      "title": "📞 문의하기",
+      "subtitle": "궁금하신 점이 있으신가요? 언제든 문의해주세요.",
+      "contactMethods": {
+        "phone": {
+          "title": "전화 문의",
+          "info": "010-8553-0545",
+          "subInfo": "평일 09:00 - 18:00",
+          "icon": "📞"
+        },
+        "email": {
+          "title": "이메일 문의",
+          "info": "marumidi@naver.com",
+          "subInfo": "24시간 접수 가능",
+          "icon": "📧"
+        },
+        "location": {
+          "title": "위치",
+          "info": "경상남도 진주시 호탄동 624-19 1층",
+          "subInfo": "방문 예약 필수",
+          "icon": "📍"
+        }
+      },
+      "button": "문의하기"
+    }
+  },
+  "en": {
+    "contact": {
+      "title": "📞 Contact Us",
+      "subtitle": "Have any questions? Feel free to contact us anytime.",
+      "contactMethods": {
+        "phone": {
+          "title": "Phone",
+          "info": "+82-10-8553-0545",
+          "subInfo": "Weekdays 09:00 - 18:00",
+          "icon": "📞"
+        },
+        "email": {
+          "title": "Email",
+          "info": "marumidi@naver.com",
+          "subInfo": "Available 24/7",
+          "icon": "📧"
+        },
+        "location": {
+          "title": "Location",
+          "info": "624-19 Hotan-dong, Jinju, Gyeongsangnam-do",
+          "subInfo": "Reservation Required",
+          "icon": "📍"
+        }
+      },
+      "button": "Contact Us"
+    }
+  }
+}
