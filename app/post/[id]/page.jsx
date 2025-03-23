@@ -21,12 +21,10 @@ export default async function PostDetailPage(context) {
   // ✅ 현재 요청의 host 받아오기
   const headersList = headers();
   const host = headersList.get("host");
+  console.log("Vercel Host:", host);
 
-  // 더 안전하게 protocol 설정
-  const isLocalhost =
-    host?.startsWith("localhost") || host?.startsWith("127.0.0.1");
-
-  const protocol = isLocalhost ? "http" : "https";
+  const protocol = host?.startsWith("localhost") ? "http" : "https";
+  console.log("Final fetch URL:", `${protocol}://${host}/api/post/${id}`);
 
   // ✅ 절대 URL로 fetch
   const res = await fetch(`${protocol}://${host}/api/post/${id}`, {

@@ -20,6 +20,9 @@ function getS3KeyFromUrl(url) {
 export async function GET(req, context) {
   const params = await context.params;
   const id = params.id;
+
+  console.log("✅ API 요청 ID:", id);
+
   await dbConnect();
   try {
     const post = await Post.findById(id);
@@ -28,13 +31,9 @@ export async function GET(req, context) {
     }
 
     // IP 확인
-    let ip;
-    try {
-      const ipResponse = await axios.get("https://api.ipify.org?format=json");
-      ip = ipResponse.data.ip;
-    } catch (error) {
-      ip = req.ip;
-    }
+    let ip = req.ip || "unknown";
+    // const ipResponse = await axios.get("https://api.ipify.org?format=json");
+    // ip = ipResponse.data.ip;
 
     const userAgent = req.headers.get("user-agent");
 
