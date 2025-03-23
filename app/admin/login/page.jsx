@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
@@ -25,12 +26,19 @@ const AdminLogin = () => {
       const response = await fetch("/api/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        // 로그인 성공
+        await Swal.fire(
+          "로그인 성공",
+          "성공적으로 로그인되었습니다.",
+          "success"
+        );
+
         router.push("/admin/posts");
+        router.refresh(); // 🔥 상태 새로고침 추가
       } else {
         const data = await response.json();
         const errorMessage = data.message || "로그인 실패";

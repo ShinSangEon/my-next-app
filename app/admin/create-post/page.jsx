@@ -3,7 +3,14 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { Editor } from "@tinymce/tinymce-react";
+import dynamic from "next/dynamic";
+import Swal from "sweetalert2";
+
+// TinyMCE Editor → SSR 끄고 클라이언트에서만 렌더링
+const Editor = dynamic(
+  () => import("@tinymce/tinymce-react").then((mod) => mod.Editor),
+  { ssr: false }
+);
 
 const AdminCreatePost = () => {
   const router = useRouter();
@@ -18,6 +25,7 @@ const AdminCreatePost = () => {
   const [currentUpload, setCurrentUpload] = useState(null);
   const [showUploadModal, setShowUploadModal] = useState(false);
 
+  // 업로드 모달
   const UploadModal = ({ progress, fileName }) =>
     showUploadModal && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -41,13 +49,14 @@ const AdminCreatePost = () => {
       </div>
     );
 
+  // 게시글 저장
   const handleSubmit = async (e) => {
     e.preventDefault();
     const editorContent = editorRef.current.getContent();
     setShowUploadModal(true);
 
     try {
-      // 파일 업로드
+      // 🔥 파일 업로드
       const uploadedFiles = await Promise.all(
         formData.files.map(async (file) => {
           setCurrentUpload(file.name);
@@ -75,25 +84,33 @@ const AdminCreatePost = () => {
         })
       );
 
-      // 게시글 저장
       const postData = {
         title: formData.title,
         content: editorContent,
         fileUrl: uploadedFiles,
       };
 
-      await fetch("/api/post", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(postData),
+      // 🔥 게시글 POST 요청
+      const res = await axios.post("/api/post", postData, {
+        withCredentials: true,
       });
 
       setShowUploadModal(false);
+
+      // 성공 시 → 목록 페이지로 이동 & 새로고침
       router.push("/admin/posts");
+      router.refresh();
     } catch (error) {
-      console.error("게시물 업로드 중 에러발생:", error);
+      console.error("게시물 업로드 중 에러:", error);
       setShowUploadModal(false);
+
+      // 🔥 권한 에러 처리
+      if (error.response && error.response.status === 401) {
+        Swal.fire("권한이 없습니다", "로그인 후 이용하세요.", "warning");
+        router.push("/admin/login");
+      } else {
+        Swal.fire("오류 발생", "게시글 저장 실패", "error");
+      }
     }
   };
 
@@ -178,7 +195,6 @@ const AdminCreatePost = () => {
                 images_upload_handler: async (blobInfo) => {
                   const imgData = new FormData();
                   imgData.append("image", blobInfo.blob());
-
                   const response = await axios.post(
                     "/api/upload/image",
                     imgData,
@@ -187,7 +203,6 @@ const AdminCreatePost = () => {
                       headers: { "Content-Type": "multipart/form-data" },
                     }
                   );
-
                   return response.data.imageUrl;
                 },
               }}

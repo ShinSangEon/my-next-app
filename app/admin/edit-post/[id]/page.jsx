@@ -27,7 +27,9 @@ const AdminEditPost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`/api/post/${id}`);
+        const response = await axios.get(`/api/post/${id}`, {
+          withCredentials: true,
+        });
         setFormData({
           title: response.data.title,
           content: response.data.content,
@@ -36,8 +38,19 @@ const AdminEditPost = () => {
           existingFiles: response.data.fileUrl || [],
         });
       } catch (error) {
-        console.log("게시물을 가져오던 중 에러발생: ", error);
-        router.push("/admin/posts");
+        console.log("게시물 가져오기 에러: ", error);
+
+        if (error.response && error.response.status === 401) {
+          alert("권한이 없습니다. 로그인 후 이용하세요.");
+          router.push("/board");
+        } else {
+          alert("게시글을 불러올 수 없습니다.");
+          router.push("/admin/posts");
+          // ✅ router.refresh()는 이동한 후에 해줘야 적용됨
+          // 방법 2가지:
+          // 1. 이동 후 새로고침은 posts 페이지에서 useEffect로
+          // 2. 여기선 안해도 이미 fetch할 때 fresh하게 가져오니까 괜찮음
+        }
       }
     };
     fetchPost();
@@ -120,7 +133,7 @@ const AdminEditPost = () => {
       });
 
       setShowUploadModal(false);
-      router.push("/admin/posts");
+      router.push("/board");
     } catch (error) {
       console.error("게시물 수정 중 에러발생:", error);
       setShowUploadModal(false);
@@ -195,42 +208,42 @@ const AdminEditPost = () => {
           {/* 내용 */}
           <div>
             <label className="block text-lg font-medium mb-2">내용</label>
-            <Editor
-              apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
-              onInit={(evt, editor) => (editorRef.current = editor)}
-              initialValue={formData.content}
-              init={{
-                height: 500,
-                menubar: true,
-                plugins: [
-                  "advlist",
-                  "autolink",
-                  "lists",
-                  "link",
-                  "image",
-                  "preview",
-                  "code",
-                  "fullscreen",
-                ],
-                toolbar:
-                  "undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist | image | code",
-                images_upload_handler: async (blobInfo) => {
-                  const imgData = new FormData();
-                  imgData.append("image", blobInfo.blob());
-
-                  const response = await axios.post(
-                    "/api/upload/image",
-                    imgData,
-                    {
-                      withCredentials: true,
-                      headers: { "Content-Type": "multipart/form-data" },
-                    }
-                  );
-
-                  return response.data.imageUrl;
-                },
-              }}
-            />
+            {formData.content && (
+              <Editor
+                apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
+                onInit={(evt, editor) => (editorRef.current = editor)}
+                initialValue={formData.content}
+                init={{
+                  height: 500,
+                  menubar: true,
+                  plugins: [
+                    "advlist",
+                    "autolink",
+                    "lists",
+                    "link",
+                    "image",
+                    "preview",
+                    "code",
+                    "fullscreen",
+                  ],
+                  toolbar:
+                    "undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist | image | code",
+                  images_upload_handler: async (blobInfo) => {
+                    const imgData = new FormData();
+                    imgData.append("image", blobInfo.blob());
+                    const response = await axios.post(
+                      "/api/upload/image",
+                      imgData,
+                      {
+                        withCredentials: true,
+                        headers: { "Content-Type": "multipart/form-data" },
+                      }
+                    );
+                    return response.data.imageUrl;
+                  },
+                }}
+              />
+            )}
           </div>
 
           {/* 기존 파일 */}
@@ -309,7 +322,7 @@ const AdminEditPost = () => {
             </button>
             <button
               type="button"
-              onClick={() => router.push("/admin/posts")}
+              onClick={() => router.push("/board")}
               className="border px-6 py-2 rounded-lg"
             >
               취소

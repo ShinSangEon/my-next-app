@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/lib/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import { Contact } from "@/models/Contact";
 import { verifyToken } from "@/lib/verifyToken";
 

@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-import { useRouter } from "next/navigation"; // ✅ Next.js Router
+import { useRouter } from "next/navigation";
 import BoardLocale from "@/Locale/Board.json";
 
 const Board = () => {
@@ -16,19 +16,18 @@ const Board = () => {
   const [endDate, setEndDate] = useState("");
   const [language, setLanguage] = useState("ko");
 
-  const router = useRouter(); // ✅ Next.js에서 페이지 이동
+  const router = useRouter();
 
   // 🔹 게시글 가져오기
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("/api/post"); // ✅ 상대경로로 변경
+        const response = await axios.get(`/api/post?_=${Date.now()}`);
         setPosts(response.data);
       } catch (error) {
         console.error("게시글 가져오기 실패: ", error);
       }
     };
-
     fetchPosts();
   }, []);
 
@@ -87,13 +86,22 @@ const Board = () => {
     }),
   };
 
+  // 날짜 포맷 함수
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  };
+
   return (
     <motion.div
       className="p-4 mx-auto max-w-7xl py-32"
       initial="hidden"
       animate="visible"
     >
-      {/* 제목 */}
       <motion.h1
         className="text-4xl font-bold mb-6 text-center"
         variants={fadeIn}
@@ -101,9 +109,6 @@ const Board = () => {
       >
         {t("board.title")}
       </motion.h1>
-
-      {/* 검색 및 필터 */}
-      {/* (생략: 기존 코드 그대로 Next.js에서 잘 작동) */}
 
       {/* 테이블 */}
       <motion.div
@@ -117,7 +122,7 @@ const Board = () => {
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider w-[8%]">
                 {t("board.table.number")}
               </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider w-auto">
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
                 {t("board.table.title")}
               </th>
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider w-[15%]">
@@ -139,17 +144,18 @@ const Board = () => {
               paginatedPosts.map((post, index) => (
                 <motion.tr
                   key={post._id}
-                  onClick={() => router.push(`/post/${post._id}`)} // ✅ Next.js에서는 router.push 사용
+                  onClick={() => router.push(`/post/${post._id}`)}
                   className="hover:bg-gray-50 cursor-pointer"
                   variants={fadeIn}
                   custom={3 + index}
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {(currentPage - 1) * pageSize + index + 1}
+                    {filteredPosts.length -
+                      ((currentPage - 1) * pageSize + index)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">{post.title}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {new Date(post.createdAt).toLocaleDateString()}
+                    {formatDate(post.createdAt)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">{post.views}</td>
                 </motion.tr>
@@ -159,39 +165,7 @@ const Board = () => {
         </table>
       </motion.div>
 
-      <motion.div
-        className="md:hidden grid grid-cols-1 gap-4"
-        variants={fadeIn}
-        custom={3}
-      >
-        {paginatedPosts.length === 0 ? (
-          <div className="col-span-full text-center text-gray-500">
-            {t("board.noPosts")}
-          </div>
-        ) : (
-          paginatedPosts.map((post, index) => (
-            <motion.div
-              key={post._id}
-              onClick={() => navigate(`/post/${post._id}`)}
-              className="border rounded-lg p-4 bg-white shadow-md hover:shadow-lg transition-shadow"
-              variants={fadeIn}
-              custom={4 + index}
-            >
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="text-lg font-bold truncate">{post.title}</h3>
-                <span className="text-sm text-gray-500">
-                  #{(currentPage - 1) * pageSize + index + 1}
-                </span>
-              </div>
-              <p className="text-sm text-gray-600 mb-3 truncate">
-                작성일: {new Date(post.createdAt).toLocaleDateString()}
-              </p>
-              <p className="text-sm text-gray-600">조회수: {post.views}</p>
-            </motion.div>
-          ))
-        )}
-      </motion.div>
-
+      {/* 페이징 */}
       <motion.div
         className="mt-4 flex justify-center space-x-2 text-lg font-bold"
         variants={fadeIn}

@@ -12,11 +12,18 @@ const AdminPosts = () => {
   const [searchType, setSearchType] = useState("title");
   const router = useRouter();
 
-  // 게시글 데이터 불러오기
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch("/api/post", { cache: "no-store" });
+        const res = await fetch("/api/post", {
+          cache: "no-store",
+          credentials: "include",
+        });
+        if (res.status === 401) {
+          Swal.fire("권한이 없습니다", "로그인 후 이용해주세요", "warning");
+          router.push("/admin/login");
+          return;
+        }
         const data = await res.json();
         setPosts(data);
       } catch (err) {
@@ -25,7 +32,7 @@ const AdminPosts = () => {
     };
 
     fetchPosts();
-  }, []);
+  }, [router]);
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -59,7 +66,6 @@ const AdminPosts = () => {
 
   const getFileNameFromUrl = (url) => {
     if (!url) return "";
-    if (typeof url !== "string") return "";
     const parts = url.split("/");
     return parts[parts.length - 1];
   };
@@ -113,9 +119,84 @@ const AdminPosts = () => {
       </div>
 
       {/* 게시글 테이블 */}
-      {/* 👉 기존 테이블, 모바일용 카드 리스트 그대로 복붙 가능! */}
+      <table className="min-w-full bg-white border rounded-lg">
+        <thead className="bg-gray-50">
+          <tr>
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              번호
+            </th>
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              제목
+            </th>
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              작성일
+            </th>
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              파일
+            </th>
+            <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
+              수정 / 삭제
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200">
+          {paginatedPosts.length === 0 ? (
+            <tr>
+              <td colSpan="5" className="px-4 py-8 text-center text-gray-500">
+                게시글이 없습니다.
+              </td>
+            </tr>
+          ) : (
+            paginatedPosts.map((post, index) => (
+              <tr key={post._id} className="hover:bg-gray-50">
+                <td className="px-6 py-4">
+                  {(currentPage - 1) * pageSize + index + 1}
+                </td>
+                <td
+                  className="px-6 py-4 cursor-pointer hover:text-blue-500"
+                  onClick={() => router.push(`/post/${post._id}`)}
+                >
+                  {post.title}
+                </td>
+                <td className="px-6 py-4">
+                  {new Date(post.createdAt).toLocaleDateString("ko-KR")}
+                </td>
+                <td className="px-6 py-4">
+                  {post.fileUrl?.length > 0
+                    ? post.fileUrl.map((url, i) => (
+                        <a
+                          key={i}
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 underline block"
+                        >
+                          {getFileNameFromUrl(url)}
+                        </a>
+                      ))
+                    : "없음"}
+                </td>
+                <td className="px-6 py-4 text-center">
+                  <button
+                    className="text-green-500 hover:underline mr-2"
+                    onClick={() => router.push(`/admin/edit-post/${post._id}`)}
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={() => handleDelete(post._id)}
+                    className="text-red-500 hover:underline"
+                  >
+                    삭제
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
 
-      {/* 페이징, 삭제 버튼은 기존과 동일 */}
+      {/* 페이징 추가 가능 */}
     </div>
   );
 };

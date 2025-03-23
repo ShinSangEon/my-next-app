@@ -1,4 +1,4 @@
-"use client"; // ⭐️⭐️⭐️ 반드시 추가!
+"use client";
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -63,6 +63,16 @@ const Forum = () => {
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  // 날짜 포맷팅 함수 추가!
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
   };
 
   return (
@@ -141,7 +151,7 @@ const Forum = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-4 mb-2">
                         <span className="text-gray-500 text-sm">
-                          {t("forum.postInfo.number")} {post.number}
+                          {t("forum.postInfo.number")} {index + 1}
                         </span>
                         <span className="text-gray-500 text-sm">
                           {t("forum.postInfo.views")}: {post.views}
@@ -155,7 +165,9 @@ const Forum = () => {
                       <h3 className="text-xl font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-300">
                         {post.title}
                       </h3>
-                      <div className="mt-2 text-gray-500">{post.createdAt}</div>
+                      <div className="mt-2 text-gray-500">
+                        {formatDate(post.createdAt)}
+                      </div>
                     </div>
                     <div className="ml-4">
                       <svg

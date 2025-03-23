@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/lib/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import { Post } from "@/models/Post";
 import { verifyToken } from "@/lib/verifyToken";
 import { s3Client } from "@/lib/s3Client";
@@ -17,10 +17,12 @@ function getS3KeyFromUrl(url) {
   }
 }
 
-export async function GET(req, { params }) {
+export async function GET(req, context) {
+  const params = await context.params;
+  const id = params.id;
   await dbConnect();
   try {
-    const post = await Post.findById(params.id);
+    const post = await Post.findById(id);
     if (!post) {
       return NextResponse.json({ message: "게시글 없음" }, { status: 404 });
     }
@@ -68,7 +70,9 @@ export async function GET(req, { params }) {
   }
 }
 
-export async function PUT(req, { params }) {
+export async function PUT(req, context) {
+  const params = await context.params;
+  const id = params.id;
   await dbConnect();
   try {
     const token = req.cookies.get("token")?.value;
@@ -77,8 +81,7 @@ export async function PUT(req, { params }) {
     }
 
     const { title, content, fileUrl } = await req.json();
-
-    const post = await Post.findById(params.id);
+    const post = await Post.findById(id);
     if (!post) {
       return NextResponse.json({ message: "게시글 없음" }, { status: 404 });
     }
@@ -109,6 +112,10 @@ export async function PUT(req, { params }) {
           );
         } catch (err) {
           console.error("S3 삭제 에러:", err);
+          return NextResponse.json(
+            { message: "파일 삭제 실패", error: err.message },
+            { status: 500 }
+          );
         }
       }
     }
@@ -126,7 +133,9 @@ export async function PUT(req, { params }) {
   }
 }
 
-export async function DELETE(req, { params }) {
+export async function DELETE(req, context) {
+  const params = await context.params;
+  const id = params.id;
   await dbConnect();
   try {
     const token = req.cookies.get("token")?.value;
@@ -134,7 +143,7 @@ export async function DELETE(req, { params }) {
       return NextResponse.json({ message: "인증 필요" }, { status: 401 });
     }
 
-    const post = await Post.findById(params.id);
+    const post = await Post.findById(id);
     if (!post) {
       return NextResponse.json({ message: "게시글 없음" }, { status: 404 });
     }

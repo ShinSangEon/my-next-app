@@ -1,16 +1,20 @@
 import { NextResponse } from "next/server";
-import { dbConnect } from "@/lib/dbConnect";
+import { cookies } from "next/headers";
+import dbConnect from "@/lib/dbConnect";
 import { User } from "@/models/User";
 import { verifyToken } from "@/lib/verifyToken";
 
-export async function POST(req) {
+export async function GET() {
   await dbConnect();
+
   try {
-    const token = req.cookies.get("token")?.value;
+    const cookieStore = cookies();
+    const token = cookieStore.get("token")?.value;
+
     if (!token) {
       return NextResponse.json(
-        { isValid: false, message: "토큰이 유효하지 않습니다." },
-        { status: 400 }
+        { isValid: false, message: "토큰이 존재하지 않습니다." },
+        { status: 401 }
       );
     }
 
@@ -31,14 +35,15 @@ export async function POST(req) {
     }
 
     const now = new Date();
-    const lastActiveAt = new Date(user.lastActiveAt);
+    const lastActiveAt = user.lastActiveAt ? new Date(user.lastActiveAt) : now;
     const inactiveTime = (now - lastActiveAt) / (1000 * 60);
 
     if (inactiveTime > 30) {
       user.isLoggedIn = false;
       await user.save();
+      cookieStore.delete("token"); // ✅ 만료 시 토큰 삭제
       return NextResponse.json(
-        { isValid: false, message: "세션 만료" },
+        { isValid: false, message: "세션이 만료되었습니다." },
         { status: 401 }
       );
     }
@@ -48,8 +53,9 @@ export async function POST(req) {
 
     return NextResponse.json({ isValid: true, user: decoded });
   } catch (err) {
+    console.error("토큰 검증 에러:", err);
     return NextResponse.json(
-      { isValid: false, message: "서버 오류" },
+      { isValid: false, message: "서버 오류가 발생했습니다." },
       { status: 500 }
     );
   }
