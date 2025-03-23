@@ -5,7 +5,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { FiPhone, FiMail, FiMapPin } from "react-icons/fi";
 import Swal from "sweetalert2";
-import contactData from "@/Locale/contact.json"; // ✅ 절대경로 수정
+import contactData from "@/Locale/Contact.json"; // ✅ 절대경로 수정
 
 const fadeInVariants = {
   hidden: { opacity: 0, y: 30 },

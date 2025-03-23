@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image"; // Next.js 이미지 처리
 import { motion } from "framer-motion";
-import aboutData from "@/Locale/about.json";
+import aboutData from "@/Locale/About.json";
 import companyImage from "@/public/camera.jpg"; // public 폴더 기준
 
 // 🔹 애니메이션 효과 설정

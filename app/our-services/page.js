@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link"; // ✅ Next.js 전용 Link
 import { motion } from "framer-motion";
-import servicesData from "@/Locale/services.json"; // ✅ 절대경로로 수정
+import servicesData from "@/Locale/Services.json"; // ✅ 절대경로로 수정
 
 const Services = () => {
   const [currentLanguage, setCurrentLanguage] = useState("ko");
