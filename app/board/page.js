@@ -165,6 +165,35 @@ const Board = () => {
         </table>
       </motion.div>
 
+      {/* 모바일 카드 형태 */}
+      <motion.div
+        className="block md:hidden space-y-4"
+        variants={fadeIn}
+        custom={2}
+      >
+        {paginatedPosts.length === 0 ? (
+          <div className="text-center text-gray-500 py-8">
+            {t("board.noPosts")}
+          </div>
+        ) : (
+          paginatedPosts.map((post, index) => (
+            <motion.div
+              key={post._id}
+              onClick={() => router.push(`/post/${post._id}`)}
+              className="border rounded-lg p-4 bg-white shadow cursor-pointer"
+              variants={fadeIn}
+              custom={3 + index}
+            >
+              <div className="text-lg font-bold mb-2">{post.title}</div>
+              <div className="flex justify-between text-sm text-gray-500">
+                <span>{formatDate(post.createdAt)}</span>
+                <span>조회수 {post.views}</span>
+              </div>
+            </motion.div>
+          ))
+        )}
+      </motion.div>
+
       {/* 페이징 */}
       <motion.div
         className="mt-4 flex justify-center space-x-2 text-lg font-bold"

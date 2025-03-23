@@ -118,85 +118,164 @@ const AdminPosts = () => {
         </button>
       </div>
 
-      {/* 게시글 테이블 */}
-      <table className="min-w-full bg-white border rounded-lg">
-        <thead className="bg-gray-50">
-          <tr>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-              번호
-            </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-              제목
-            </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-              작성일
-            </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-              파일
-            </th>
-            <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
-              수정 / 삭제
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200">
-          {paginatedPosts.length === 0 ? (
+      {/* 데스크탑 테이블 */}
+      <div className="hidden md:block overflow-x-auto">
+        <table className="min-w-full bg-white border rounded-lg">
+          <thead className="bg-gray-50">
             <tr>
-              <td colSpan="5" className="px-4 py-8 text-center text-gray-500">
-                게시글이 없습니다.
-              </td>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                번호
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                제목
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                작성일
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                파일
+              </th>
+              <th className="px-6 py-3 text-center text-sm font-medium text-gray-500 uppercase tracking-wider">
+                수정 / 삭제
+              </th>
             </tr>
-          ) : (
-            paginatedPosts.map((post, index) => (
-              <tr key={post._id} className="hover:bg-gray-50">
-                <td className="px-6 py-4">
-                  {(currentPage - 1) * pageSize + index + 1}
-                </td>
-                <td
-                  className="px-6 py-4 cursor-pointer hover:text-blue-500"
-                  onClick={() => router.push(`/post/${post._id}`)}
-                >
-                  {post.title}
-                </td>
-                <td className="px-6 py-4">
-                  {new Date(post.createdAt).toLocaleDateString("ko-KR")}
-                </td>
-                <td className="px-6 py-4">
-                  {post.fileUrl?.length > 0
-                    ? post.fileUrl.map((url, i) => (
-                        <a
-                          key={i}
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-500 underline block"
-                        >
-                          {getFileNameFromUrl(url)}
-                        </a>
-                      ))
-                    : "없음"}
-                </td>
-                <td className="px-6 py-4 text-center">
-                  <button
-                    className="text-green-500 hover:underline mr-2"
-                    onClick={() => router.push(`/admin/edit-post/${post._id}`)}
-                  >
-                    수정
-                  </button>
-                  <button
-                    onClick={() => handleDelete(post._id)}
-                    className="text-red-500 hover:underline"
-                  >
-                    삭제
-                  </button>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {paginatedPosts.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="px-4 py-8 text-center text-gray-500">
+                  게시글이 없습니다.
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : (
+              paginatedPosts.map((post, index) => (
+                <tr key={post._id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4">
+                    {(currentPage - 1) * pageSize + index + 1}
+                  </td>
+                  <td
+                    className="px-6 py-4 cursor-pointer hover:text-blue-500"
+                    onClick={() => router.push(`/post/${post._id}`)}
+                  >
+                    {post.title}
+                  </td>
+                  <td className="px-6 py-4">
+                    {new Date(post.createdAt).toLocaleDateString("ko-KR")}
+                  </td>
+                  <td className="px-6 py-4">
+                    {post.fileUrl?.length > 0
+                      ? post.fileUrl.map((url, i) => (
+                          <a
+                            key={i}
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 underline block"
+                          >
+                            {getFileNameFromUrl(url)}
+                          </a>
+                        ))
+                      : "없음"}
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <button
+                      className="text-green-500 hover:underline mr-2"
+                      onClick={() =>
+                        router.push(`/admin/edit-post/${post._id}`)
+                      }
+                    >
+                      수정
+                    </button>
+                    <button
+                      onClick={() => handleDelete(post._id)}
+                      className="text-red-500 hover:underline"
+                    >
+                      삭제
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
 
-      {/* 페이징 추가 가능 */}
+      {/* 모바일 카드 */}
+      <div className="block md:hidden space-y-4">
+        {paginatedPosts.length === 0 ? (
+          <div className="text-center text-gray-500 py-8">
+            게시글이 없습니다.
+          </div>
+        ) : (
+          paginatedPosts.map((post, index) => (
+            <div
+              key={post._id}
+              className="border rounded-lg p-4 bg-white shadow"
+            >
+              <div
+                className="text-lg font-bold mb-2 cursor-pointer hover:text-blue-500"
+                onClick={() => router.push(`/post/${post._id}`)}
+              >
+                {post.title}
+              </div>
+              <div className="text-sm text-gray-500 mb-2">
+                작성일: {new Date(post.createdAt).toLocaleDateString("ko-KR")}
+              </div>
+              <div className="mb-2">
+                파일:{" "}
+                {post.fileUrl?.length > 0
+                  ? post.fileUrl.map((url, i) => (
+                      <a
+                        key={i}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 underline block"
+                      >
+                        {getFileNameFromUrl(url)}
+                      </a>
+                    ))
+                  : "없음"}
+              </div>
+              <div className="flex justify-end space-x-2">
+                <button
+                  onClick={() => router.push(`/admin/edit-post/${post._id}`)}
+                  className="text-green-500 hover:underline"
+                >
+                  수정
+                </button>
+                <button
+                  onClick={() => handleDelete(post._id)}
+                  className="text-red-500 hover:underline"
+                >
+                  삭제
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* 페이징 */}
+      <div className="mt-6 flex justify-center space-x-2 text-lg font-bold">
+        <button
+          className="px-3 py-1 rounded border disabled:opacity-50"
+          onClick={() => setCurrentPage((p) => p - 1)}
+          disabled={currentPage === 1 || totalPages === 0}
+        >
+          이전
+        </button>
+        <span className="px-3 py-1">
+          {totalPages > 0 ? `${currentPage} / ${totalPages}` : "0 / 0"}
+        </span>
+        <button
+          className="px-3 py-1 rounded border disabled:opacity-50"
+          onClick={() => setCurrentPage((p) => p + 1)}
+          disabled={currentPage >= totalPages || totalPages === 0}
+        >
+          다음
+        </button>
+      </div>
     </div>
   );
 };
