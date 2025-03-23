@@ -26,12 +26,12 @@ export async function POST(req) {
       );
     }
 
-    if (user.isLoggedIn) {
-      return NextResponse.json(
-        { message: "이미 다른 기기에서 로그인되어 있습니다." },
-        { status: 401 }
-      );
-    }
+    // if (user.isLoggedIn) {
+    //   return NextResponse.json(
+    //     { message: "이미 다른 기기에서 로그인되어 있습니다." },
+    //     { status: 401 }
+    //   );
+    // }
 
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
@@ -60,7 +60,7 @@ export async function POST(req) {
     // 로그인 성공
     user.failedLoginAttempts = 0;
     user.lastLoginAttempt = new Date();
-    user.isLoggedIn = true;
+    // user.isLoggedIn = true;
 
     try {
       const response = await axios.get("https://api.ipify.org?format=json");
