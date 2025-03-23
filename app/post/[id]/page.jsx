@@ -1,6 +1,6 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import DeletePostButton from "@/components/DeletePostButton"; // ✅ 삭제 버튼 컴포넌트 import
 
 export async function generateMetadata(context) {
@@ -12,13 +12,24 @@ export async function generateMetadata(context) {
 }
 
 export default async function PostDetailPage(context) {
-  const params = await context.params;
+  const params = context.params;
   const id = params.id;
 
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value || "";
 
-  const res = await fetch(`/api/post/${id}`, {
+  // ✅ 현재 요청의 host 받아오기
+  const headersList = headers();
+  const host = headersList.get("host");
+
+  // 더 안전하게 protocol 설정
+  const isLocalhost =
+    host?.startsWith("localhost") || host?.startsWith("127.0.0.1");
+
+  const protocol = isLocalhost ? "http" : "https";
+
+  // ✅ 절대 URL로 fetch
+  const res = await fetch(`${protocol}://${host}/api/post/${id}`, {
     headers: { Cookie: `token=${token}` },
     cache: "no-store",
   });
