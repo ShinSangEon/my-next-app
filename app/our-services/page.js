@@ -49,7 +49,7 @@ const Services = () => {
 
   return (
     <motion.div
-      className="container mx-auto px-4 sm:px-6 py-16 sm:py-24 max-w-7xl"
+      className="container mx-auto px-4 sm:px-6 pt-28 sm:pt-40 pb-16 sm:pb-24 max-w-7xl"
       initial="hidden"
       animate="visible"
     >
@@ -171,7 +171,7 @@ const Services = () => {
         >
           <Link
             href="/contact"
-            className="bg-white text-blue-600 px-8 sm:px-10 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-blue-50 transition-colors duration-300"
+            className="bg-white text-blue-600 px-6 sm:px-10 py-3 sm:py-4 rounded-lg text-sm sm:text-lg font-semibold hover:bg-blue-50 transition-colors duration-300"
           >
             {getLocalizedText("services.cta.button")}
           </Link>
