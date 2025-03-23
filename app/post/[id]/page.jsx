@@ -18,13 +18,10 @@ export default async function PostDetailPage(context) {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value || "";
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api/post/${id}`,
-    {
-      headers: { Cookie: `token=${token}` },
-      cache: "no-store",
-    }
-  );
+  const res = await fetch(`/api/post/${id}`, {
+    headers: { Cookie: `token=${token}` },
+    cache: "no-store",
+  });
 
   if (!res.ok) return notFound();
 
